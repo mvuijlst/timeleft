@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <title>Time</title>
+    <script>
+        birthday = new Date(1970, 8, 27, 0, 0, 0, 0);
+        endhour = 17;
+        endminutes = 0;
+
+        function startTime() {
+            var today = new Date();
+            var yy = today.getFullYear();
+            var mm = today.getMonth();
+            var dd = today.getDate();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            var ms = today.getMilliseconds();
+
+            clearContent("datetime");
+            addContent("datetime", "Het is nu " + h + "u" + doZero(m));
+            addContent("datetime", " en " + s + "." + doPad(ms, 3) + " seconden");
+            addContent("datetime", " op " + dateFormat(today) + ".");
+            clearContent("pension");
+            addContent("pension", " Ge zijt geboren op " + dateFormat(birthday) + ", wat wil zeggen");
+            pensionDate = new Date(birthday.getFullYear() + 67, birthday.getMonth(), birthday.getDate());
+            addContent("pension", " dat ge in de regel nog moet werken tot " + dateFormat(pensionDate) + ".");
+            untilPensionYears = pensionDate.getFullYear() - yy;
+            addContent("pension", " Dat is dus nog " + untilPensionYears + " jaar, of om exact te zijn ");
+            untilPensionDays = daysBetween(today, pensionDate);
+            addContent("pension", " (schrikkeldagen in acht genomen): " + parseInt(untilPensionDays) + " dagen.");
+
+            //minute
+            millisecondsToEndOfMinute = 60000 - (s * 1000 + ms);
+            clearContent("minuteleft");
+            addContent("minuteleft", "nog " + parseInt(millisecondsToEndOfMinute / 1000) + " seconden ");
+            msPercentageMinute = (60000 - millisecondsToEndOfMinute) / 60000 * 100;
+            document.getElementById("minute").style.width = msPercentageMinute + "%";
+
+            //hour
+            millisecondsToEndOfHour = 60 * 60 * 1000 - (m * 60 * 1000 + s * 1000 + ms);
+            clearContent("hourleft");
+            minutesLeft = parseInt(millisecondsToEndOfHour / 1000 / 60);
+            if (minutesLeft < 1) {
+                addContent("hourleft", "nog minder dan een minuut ");
+            } else {
+                addContent("hourleft", "nog " + minutesLeft + " minuten ");
+            }
+            msPercentageHour = (60 * 60 * 1000 - millisecondsToEndOfHour) / (60 * 60 * 1000) * 100;
+            document.getElementById("hour").style.width = msPercentageHour + "%";
+
+            //day
+            endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
+            milliSecondsToEndOfDay = endOfDay - today;
+            clearContent("dayleft");
+            hoursLeft = parseInt(milliSecondsToEndOfDay / 1000 / 60 / 60);
+            if (hoursLeft < 1) {
+                addContent("dayleft", "nog minder dan een uur ");
+            } else {
+                addContent("dayleft", "nog " + hoursLeft + " uur ");
+            }
+            msPercentageDay = (9 * 60 * 60 * 1000 - milliSecondsToEndOfDay) / (9 * 60 * 60 * 1000) * 100;
+            document.getElementById("day").style.width = parseInt(msPercentageDay) + "%";
+
+            //dayofweek
+            minutesThisWeek = 9 * 60 * 5;
+            //TODO minutesDoneThisWeek = 60*9*(today.getDay()-1)+h-9
+
+            var t = setTimeout(startTime, 79);
+        }
+
+        function doZero(i) {
+            return i < 10 ? "0" + i : i;
+        }
+
+        function doPad(i, ln) {
+            return i.toString().length < ln ? "0".repeat(ln - i.toString().length) + i : i;
+        }
+
+        function dateFormat(str) {
+            var date = new Date(str);
+            var montharray = new Array('januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december');
+            var dayarray = new Array('zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag');
+            return (dayarray[date.getDay()] + ' ' + date.getDate() + ' ' + montharray[date.getMonth()] + ' ' + date.getFullYear());
+        }
+
+        function treatAsUTC(date) {
+            var result = new Date(date);
+            result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+            return result;
+        }
+
+        function daysBetween(startDate, endDate) {
+            var millisecondsPerDay = 24 * 60 * 60 * 1000;
+            return (treatAsUTC(endDate) - treatAsUTC(startDate)) / millisecondsPerDay;
+        }
+
+        function clearContent(cnt, str) {
+            document.getElementById(cnt).innerHTML = "";
+        }
+
+        function addContent(cnt, str) {
+            document.getElementById(cnt).innerHTML += str;
+        }
+    </script>
+    <style>
+        .progress {
+            width: 500px;
+            height: 25px;
+            background-color: #900;
+            padding: 0;
+            border-collapse: collapse;
+        }
+        
+        .value {
+            background-color: #090;
+        }
+        
+        .white {
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body onload="startTime()">
+
+    <h1>Hoe lang nog?</h1>
+    <p id="datetime"></p>
+    <p id="pension"></p>
+    <table>
+        <tr>
+            <td>Minuut</td>
+            <td>
+                <table class="progress">
+                    <tr>
+                        <td class="value" id="minute"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td id="minuteleft"></td>
+        </tr>
+        <tr>
+            <td>Uur</td>
+            <td>
+                <table class="progress">
+                    <tr>
+                        <td class="value" id="hour"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td id="hourleft"></td>
+        </tr>
+        <tr>
+            <td>Dag</td>
+            <td>
+                <table class="progress">
+                    <tr>
+                        <td class="value" id="day"></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+            <td id="dayleft"></td>
+        </tr>
+    </table>
+
+</body>
+
+</html>
