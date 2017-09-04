@@ -1,9 +1,116 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl-BE">
 
 <head>
     <title>Time</title>
+    <meta charset="utf-8">
+
     <script>
         var birthday = new Date(1970, 8, 27, 0, 0, 0, 0);
+
+        var data = {
+            "weekdays": [{
+                0: "Sunday"
+            }, {
+                1: "Monday"
+            }, {
+                2: "Tuesday"
+            }, {
+                3: "Wednesday"
+            }, {
+                4: "Thursday"
+            }, {
+                5: "Friday"
+            }, {
+                6: "Saturday"
+            }, ],
+            "hours": [{
+                "Monday": [{
+                    "Start": "08:30",
+                    "End": "12:00"
+                }, {
+                    "Start": "12:30",
+                    "End": "17:00"
+                }]
+            }, {
+                "Tuesday": [{
+                    "Start": "08:30",
+                    "End": "12:00"
+                }, {
+                    "Start": "12:30",
+                    "End": "17:00"
+                }]
+            }, {
+                "Wednesday": [{
+                    "Start": "08:30",
+                    "End": "12:00"
+                }, {
+                    "Start": "12:30",
+                    "End": "17:00"
+                }]
+            }, {
+                "Thursday": [{
+                    "Start": "08:30",
+                    "End": "12:00"
+                }, {
+                    "Start": "12:30",
+                    "End": "17:00"
+                }]
+            }, {
+                "Friday": [{
+                    "Start": "08:30",
+                    "End": "12:00"
+                }, {
+                    "Start": "12:30",
+                    "End": "17:00"
+                }]
+            }, {
+                "Saturday": []
+            }, {
+                "Sunday": []
+            }],
+            "fixedDaysOff": [{
+                "Nieuwjaar": "01-01"
+            }, {
+                "Dag van de Arbeid": "05-01"
+            }, {
+                "Nationale feestdag": "07-21"
+            }, {
+                "O.L.H. Hemelvaart": "08-15"
+            }, {
+                "Allerheiligen": "11-01"
+            }, {
+                "Wapenstilstand": "11-11"
+            }, {
+                "Kerstmis": "12-25"
+            }],
+            "variableDaysOff": [{
+                "Paasmaandag": "2018-04-02"
+            }, {
+                "O.H. Hemelvaart": "2018-05-10"
+            }, {
+                "Pinkstermaandag": "2018-05-18"
+            }, {
+                "Paasmaandag": "2019-04-22"
+            }, {
+                "O.H. Hemelvaart": "2019-05-30"
+            }, {
+                "Pinkstermaandag": "2019-06-10"
+            }, {
+                "Paasmaandag": "2020-04-13"
+            }, {
+                "O.H. Hemelvaart": "2020-05-21"
+            }, {
+                "Pinkstermaandag": "2020-06-01"
+            }]
+        }
+
+        var d = new Date();
+
+        thisweekday = data.weekdays[d.getDay()][1];
+
+        todayhours = data.hours[thisweekday];
+
         var starthour = 8;
         var startminutes = 30;
         var endhour = 17;
@@ -11,6 +118,7 @@
         var workminutes = endhour * 60 + endminutes - starthour * 60 - startminutes
 
         function startTime() {
+
             var today = new Date();
             var yy = today.getFullYear();
             var mm = today.getMonth();
@@ -41,17 +149,27 @@
 
                 //minute
                 millisecondsToEndOfMinute = 60000 - (s * 1000 + ms);
+                secondsLeft = parseInt(millisecondsToEndOfMinute / 1000)
                 clearContent("minuteleft");
-                addContent("minuteleft", "nog " + parseInt(millisecondsToEndOfMinute / 1000) + " seconden ");
+                if (secondsLeft < 1) {
+                    addContent("minuteleft", "nog minder dan een seconde ");
+                } else if (secondsLeft == 1) {
+                    addContent("minuteleft", "nog één seconde ");
+                } else {
+                    addContent("minuteleft", "nog " + secondsLeft + " seconden ");
+                }
+
                 msPercentageMinute = (60000 - millisecondsToEndOfMinute) / 60000 * 100;
                 doPercentage("minute", msPercentageMinute);
 
                 //hour
                 millisecondsToEndOfHour = 60 * 60 * 1000 - (m * 60 * 1000 + s * 1000 + ms);
-                clearContent("hourleft");
                 minutesLeft = parseInt(millisecondsToEndOfHour / 1000 / 60);
+                clearContent("hourleft");
                 if (minutesLeft < 1) {
                     addContent("hourleft", "nog minder dan een minuut ");
+                } else if (minutesLeft == 1) {
+                    addContent("hourleft", "nog één minuut ");
                 } else {
                     addContent("hourleft", "nog " + minutesLeft + " minuten ");
                 }
@@ -172,7 +290,7 @@
 
 <body onload="startTime()">
 
-    <h1>Hoe lang nog?</h1>
+    <!-- <h1>Hoe lang nog?</h1> -->
     <p id="pension"></p>
     <p id="datetime"></p>
     <div id="page">
