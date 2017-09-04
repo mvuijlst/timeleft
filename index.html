@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <script>
-        var birthday = new Date(1970, 8, 27, 0, 0, 0, 0);
+        var birthday = new Date(1970, 7, 27, 0, 0, 0, 0);
 
         var data = {
             "weekdays": [{
@@ -25,49 +25,49 @@
                 6: "Saturday"
             }, ],
             "hours": [{
+                "Sunday": []
+            }, {
                 "Monday": [{
-                    "Start": "08:30",
-                    "End": "12:00"
+                    "Start": "0830",
+                    "End": "1200"
                 }, {
-                    "Start": "12:30",
-                    "End": "17:00"
+                    "Start": "1230",
+                    "End": "1700"
                 }]
             }, {
                 "Tuesday": [{
-                    "Start": "08:30",
-                    "End": "12:00"
+                    "Start": "0830",
+                    "End": "1200"
                 }, {
-                    "Start": "12:30",
-                    "End": "17:00"
+                    "Start": "1230",
+                    "End": "1700"
                 }]
             }, {
                 "Wednesday": [{
-                    "Start": "08:30",
-                    "End": "12:00"
+                    "Start": "0830",
+                    "End": "1200"
                 }, {
-                    "Start": "12:30",
-                    "End": "17:00"
+                    "Start": "1230",
+                    "End": "1700"
                 }]
             }, {
                 "Thursday": [{
-                    "Start": "08:30",
-                    "End": "12:00"
+                    "Start": "0830",
+                    "End": "1200"
                 }, {
-                    "Start": "12:30",
-                    "End": "17:00"
+                    "Start": "1230",
+                    "End": "1700"
                 }]
             }, {
                 "Friday": [{
-                    "Start": "08:30",
-                    "End": "12:00"
+                    "Start": "0830",
+                    "End": "1200"
                 }, {
-                    "Start": "12:30",
-                    "End": "17:00"
+                    "Start": "1230",
+                    "End": "1700"
                 }]
             }, {
                 "Saturday": []
-            }, {
-                "Sunday": []
             }],
             "fixedDaysOff": [{
                 "Nieuwjaar": "01-01"
@@ -107,15 +107,28 @@
 
         var d = new Date();
 
-        thisweekday = data.weekdays[d.getDay()][1];
+        var thisweekday = data.weekdays[d.getDay()][1];
+        var todayhours = data.hours[d.getDay()];
+        var start1today = todayhours[thisweekday][0].Start;
+        var end1today = todayhours[thisweekday][0].End;
+        var start2today = todayhours[thisweekday][1].Start;
+        var end2today = todayhours[thisweekday][1].End;
 
-        todayhours = data.hours[thisweekday];
+        var starthour = parseInt(start1today.substring(0, 2));
+        var startminutes = parseInt(start1today.substring(2, 4));
+        var morningstarthour = starthour;
+        var morningstartminutes = startminutes;
+        var morningendhour = parseInt(end1today.substring(0, 2));
+        var morningendminutes = parseInt(end1today.substring(2, 4));
+        var afternoonstarthour = parseInt(start2today.substring(0, 2));
+        var afternoonstartminutes = parseInt(start2today.substring(2, 4));
+        var afternoonendhour = parseInt(end2today.substring(0, 2));
+        var afternoonendminutes = parseInt(end2today.substring(2, 4));
+        var endhour = afternoonendhour;
+        var endminutes = afternoonendminutes;
 
-        var starthour = 8;
-        var startminutes = 30;
-        var endhour = 17;
-        var endminutes = 00;
-        var workminutes = endhour * 60 + endminutes - starthour * 60 - startminutes
+        var workminutes = morningendhour * 60 + morningendminutes - morningstarthour * 60 - morningstartminutes +
+            afternoonendhour * 60 + afternoonendminutes - afternoonstarthour * 60 - afternoonstartminutes;
 
         function startTime() {
 
@@ -128,16 +141,32 @@
             var s = today.getSeconds();
             var ms = today.getMilliseconds();
 
-
-
             clearContent("pension");
             addContent("pension", " Ge zijt geboren op " + dateFormat(birthday) + ", wat wil zeggen");
             pensionDate = new Date(birthday.getFullYear() + 67, birthday.getMonth(), birthday.getDate());
             addContent("pension", " dat ge in de regel nog moet werken tot " + dateFormat(pensionDate) + ".");
-            untilPensionYears = pensionDate.getFullYear() - yy;
-            addContent("pension", " Dat is dus nog " + untilPensionYears + " jaar, of om exact te zijn ");
-            untilPensionDays = daysBetween(today, pensionDate);
-            addContent("pension", " (schrikkeldagen in acht genomen): " + parseInt(untilPensionDays) + " dagen.");
+            untilPensionDaysTotal = daysBetween(today, pensionDate);
+            untilPensionYears = parseInt(untilPensionDaysTotal / 365.25);
+            untilPensionMonths = parseInt((untilPensionDaysTotal - (untilPensionYears * 365.25)) / 30.4375);
+            untilPensionDays = parseInt(untilPensionDaysTotal - untilPensionYears * 365.25 - untilPensionMonths * 30.4375);
+            addContent("pension", " Dat is dus nog ongeveer " + untilPensionYears + " jaar");
+            if (untilPensionMonths == 1) {
+                if (untilPensionDays == 0) {
+                    addContent("pension", " en ");
+                } else {
+                    addContent("pension", ", ");
+                }
+                addContent("pension", "één maand");
+            } else if (untilPensionMonths != 0) {
+                addContent("pension", ", " + untilPensionMonths + " maand");
+            }
+            if (untilPensionDays == 1) {
+                addContent("pension", " en één dag");
+            } else if (untilPensionDays != 0) {
+                addContent("pension", " en " + untilPensionDays + " dagen");
+            }
+            addContent("pension", ", of om exact te zijn ");
+            addContent("pension", " (schrikkeldagen in acht genomen): " + parseInt(untilPensionDaysTotal) + " dagen.");
 
             clearContent("datetime");
             addContent("datetime", "Het is nu " + h + "u" + doZero(m));
@@ -173,6 +202,12 @@
                 } else {
                     addContent("hourleft", "nog " + minutesLeft + " minuten ");
                 }
+                addContent("hourleft", "tot ");
+                if (h < 23) {
+                    addContent("hourleft", (h + 1) + "u");
+                } else {
+                    addContent("hourleft", " middernacht");
+                }
                 msPercentageHour = (60 * 60 * 1000 - millisecondsToEndOfHour) / (60 * 60 * 1000) * 100;
                 doPercentage("hour", msPercentageHour);
 
@@ -181,7 +216,7 @@
                 milliSecondsToEndOfDay = endOfDay - today;
                 clearContent("dayleft");
                 hoursLeft = milliSecondsToEndOfDay / 1000 / 60 / 60;
-                addContent("dayleft", "nog " + hoursLeft.toPrecision(6) + " uur ");
+                addContent("dayleft", "nog " + hoursLeft.toPrecision(6) + " uur tot naar huis");
                 msPercentageDay = (workminutes * 60 * 1000 - milliSecondsToEndOfDay) / (workminutes * 60 * 1000) * 100;
                 doPercentage("day", msPercentageDay);
 
@@ -191,7 +226,7 @@
                 millisecondsDoneThisWeek = workminutes * (today.getDay() - 1) * 60 * 1000 + (today - startOfDay);
                 clearContent("weekleft");
                 minutesLeft = (millisecondsThisWeek - millisecondsDoneThisWeek) / 1000 / 60;
-                addContent("weekleft", "nog " + minutesLeft.toPrecision(6) + " minuten ");
+                addContent("weekleft", "nog " + minutesLeft.toPrecision(6) + " minuten tot weekend");
                 msPercentageDay = (millisecondsDoneThisWeek / millisecondsThisWeek) * 100;
                 doPercentage("week", msPercentageDay);
 
