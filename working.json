@@ -1,0 +1,31 @@
+{
+    "Hours": [
+        { "Monday": [{ "Start": "08:30", "End": "12:00" }, { "Start": "12:30", "End": "17:00" }] },
+        { "Tuesday": [{ "Start": "08:30", "End": "12:00" }, { "Start": "12:30", "End": "17:00" }] },
+        { "Wednesday": [{ "Start": "08:30", "End": "12:00" }, { "Start": "12:30", "End": "17:00" }] },
+        { "Thursday": [{ "Start": "08:30", "End": "12:00" }, { "Start": "12:30", "End": "17:00" }] },
+        { "Friday": [{ "Start": "08:30", "End": "12:00" }, { "Start": "12:30", "End": "17:00" }] },
+        { "Saturday": [] },
+        { "Sunday": [] }
+    ],
+    "FixedDaysOff": [
+        { "Nieuwjaar": "01-01" },
+        { "Dag van de Arbeid": "05-01" },
+        { "Nationale feestdag": "07-21" },
+        { "O.L.H. Hemelvaart": "08-15" },
+        { "Allerheiligen": "11-01" },
+        { "Wapenstilstand": "11-11" },
+        { "Kerstmis": "12-25" }
+    ],
+    "VariableDaysOff": [
+        { "Paasmaandag": "2018-04-02" },
+        { "O.H. Hemelvaart": "2018-05-10" },
+        { "Pinkstermaandag": "2018-05-18" },
+        { "Paasmaandag": "2019-04-22" },
+        { "O.H. Hemelvaart": "2019-05-30" },
+        { "Pinkstermaandag": "2019-06-10" },
+        { "Paasmaandag": "2020-04-13" },
+        { "O.H. Hemelvaart": "2020-05-21" },
+        { "Pinkstermaandag": "2020-06-01" }
+    ]
+}
