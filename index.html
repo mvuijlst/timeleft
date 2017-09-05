@@ -200,7 +200,10 @@
 
                 //day
                 endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
-                milliSecondsToEndOfDay = endOfDay - today;
+                startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
+                endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
+                noonBreak = endNoonBreak - startNoonBreak;
+                milliSecondsToEndOfDay = endOfDay - today - noonBreak;
                 clearContent("dayleft");
                 hoursLeft = milliSecondsToEndOfDay / 1000 / 60 / 60;
                 addContent("dayleft", "nog " + hoursLeft.toPrecision(6) + " uur tot naar huis");
