@@ -241,7 +241,6 @@
             var h = Math.floor((100 - nbr) * 120 / 100);
             perc = nbr.toPrecision(5) + "%";
 
-            document.getElementById(cnt).style.backgroundColor = hsv2rgb(h, 1, .75);
             if (nbr > 10) {
                 document.getElementById(cnt).innerHTML = perc + "&nbsp;";
                 document.getElementById(cnt + "2").innerHTML = "";
@@ -251,6 +250,7 @@
             }
 
             document.getElementById(cnt + "pie").style.strokeDasharray = nbr + ", 100";
+            document.getElementById(cnt + "pie").style.stroke = hsv2rgb(h, 1, .75);
             document.getElementById(cnt).style.width = perc;
         }
 
@@ -336,7 +336,7 @@
         }
         
         .value {
-            background-color: #090;
+            background-color: #666;
             text-align: right;
             font-size: 0.7em;
             color: #fff;
