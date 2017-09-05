@@ -8,22 +8,9 @@
     <script>
         var birthday = new Date(1970, 7, 27, 0, 0, 0, 0);
 
+        var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
         var data = {
-            "weekdays": [{
-                0: "Sunday"
-            }, {
-                1: "Monday"
-            }, {
-                2: "Tuesday"
-            }, {
-                3: "Wednesday"
-            }, {
-                4: "Thursday"
-            }, {
-                5: "Friday"
-            }, {
-                6: "Saturday"
-            }, ],
             "hours": [{
                 "Sunday": []
             }, {
@@ -107,12 +94,12 @@
 
         var d = new Date();
 
-        var thisweekday = data.weekdays[d.getDay()][1];
+        var thisweekday = weekdays[d.getDay()];
         var todayhours = data.hours[d.getDay()];
-        var start1today = todayhours[thisweekday][0].Start;
-        var end1today = todayhours[thisweekday][0].End;
-        var start2today = todayhours[thisweekday][1].Start;
-        var end2today = todayhours[thisweekday][1].End;
+        var start1today = todayhours[thisweekday][0]["Start"];
+        var end1today = todayhours[thisweekday][0]["End"];
+        var start2today = todayhours[thisweekday][1]["Start"];
+        var end2today = todayhours[thisweekday][1]["End"];
 
         var starthour = parseInt(start1today.substring(0, 2));
         var startminutes = parseInt(start1today.substring(2, 4));
