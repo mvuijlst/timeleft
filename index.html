@@ -203,7 +203,7 @@
                 startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
                 endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
                 noonBreak = endNoonBreak - startNoonBreak;
-                milliSecondsToEndOfDay = endOfDay - today - noonBreak;
+                milliSecondsToEndOfDay = endOfDay - today;
                 clearContent("dayleft");
                 hoursLeft = milliSecondsToEndOfDay / 1000 / 60 / 60;
                 addContent("dayleft", "nog " + hoursLeft.toPrecision(6) + " uur tot naar huis");
@@ -216,7 +216,7 @@
                 millisecondsDoneThisWeek = workminutes * (today.getDay() - 1) * 60 * 1000 + (today - startOfDay);
                 clearContent("weekleft");
                 minutesLeft = (millisecondsThisWeek - millisecondsDoneThisWeek) / 1000 / 60;
-                addContent("weekleft", "nog " + minutesLeft.toPrecision(6) + " minuten tot weekend");
+                addContent("weekleft", "nog " + minutesLeft.toPrecision(6) + " werkminuten tot weekend");
                 msPercentageDay = (millisecondsDoneThisWeek / millisecondsThisWeek) * 100;
                 doPercentage("week", msPercentageDay);
 
@@ -238,7 +238,7 @@
         }
 
         function doPercentage(cnt, nbr) {
-            var h = Math.floor((100 - nbr) * 120 / 100);
+            var h = Math.floor((nbr) * 120 / 100);
             perc = nbr.toPrecision(5) + "%";
 
             if (nbr > 10) {
@@ -251,7 +251,7 @@
 
             document.getElementById(cnt + "pie").style.strokeDasharray = nbr + ", 100";
             document.getElementById(cnt + "pie").style.stroke = hsv2rgb(h, 1, .75);
-            document.getElementById(cnt + "pie2").style.fill = hsv2rgb(h, 1, .75);
+            //document.getElementById(cnt + "pie2").style.fill = hsv2rgb(h, 1, .75);
             document.getElementById(cnt).style.width = perc;
         }
 
