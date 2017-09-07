@@ -251,6 +251,7 @@
 
             document.getElementById(cnt + "pie").style.strokeDasharray = nbr + ", 100";
             document.getElementById(cnt + "pie").style.stroke = hsv2rgb(h, 1, .75);
+            document.getElementById(cnt + "pie2").style.fill = hsv2rgb(h, 1, .75);
             document.getElementById(cnt).style.width = perc;
         }
 
@@ -395,7 +396,7 @@
                 </td>
                 <td><svg viewBox="0 0 32 32">
                         <circle class="outer" id="minutepie" r="16" cx="16" cy="16" />
-                        <circle class="inner" r="8" cx="16" cy="16" />
+                        <circle class="inner" id="minutepie2" r="8" cx="16" cy="16" />
                     </svg>
                 </td>
                 <td id="minuteleft"></td>
@@ -412,7 +413,7 @@
                 </td>
                 <td><svg viewBox="0 0 32 32">
                         <circle class="outer" id="hourpie" r="16" cx="16" cy="16" />
-                        <circle class="inner" r="8" cx="16" cy="16" />
+                        <circle class="inner" id="hourpie2" r="8" cx="16" cy="16" />
                     </svg>
                 </td>
                 <td id="hourleft"></td>
@@ -429,7 +430,7 @@
                 </td>
                 <td><svg viewBox="0 0 32 32">
                         <circle class="outer" id="daypie" r="16" cx="16" cy="16" />
-                        <circle class="inner" r="8" cx="16" cy="16" />
+                        <circle class="inner" id="daypie2" r="8" cx="16" cy="16" />
                     </svg>
                 </td>
                 <td id="dayleft"></td>
@@ -446,7 +447,7 @@
                 </td>
                 <td><svg viewBox="0 0 32 32">
                         <circle class="outer" id="weekpie" r="16" cx="16" cy="16" />
-                        <circle class="inner" r="8" cx="16" cy="16" />
+                        <circle class="inner" id="weekpie2" r="8" cx="16" cy="16" />
                     </svg>
                 </td>
                 <td id="weekleft"></td>
