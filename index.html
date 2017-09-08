@@ -16,41 +16,41 @@
             }, {
                 "Monday": [{
                     "Start": "0830",
-                    "End": "1200"
+                    "End": "1205"
                 }, {
-                    "Start": "1230",
+                    "Start": "1225",
                     "End": "1700"
                 }]
             }, {
                 "Tuesday": [{
                     "Start": "0830",
-                    "End": "1200"
+                    "End": "1205"
                 }, {
-                    "Start": "1230",
+                    "Start": "1235",
                     "End": "1700"
                 }]
             }, {
                 "Wednesday": [{
                     "Start": "0830",
-                    "End": "1200"
+                    "End": "1205"
                 }, {
-                    "Start": "1230",
+                    "Start": "1235",
                     "End": "1700"
                 }]
             }, {
                 "Thursday": [{
                     "Start": "0830",
-                    "End": "1200"
+                    "End": "1205"
                 }, {
-                    "Start": "1230",
+                    "Start": "1235",
                     "End": "1700"
                 }]
             }, {
                 "Friday": [{
                     "Start": "0830",
-                    "End": "1200"
+                    "End": "1205"
                 }, {
-                    "Start": "1230",
+                    "Start": "1235",
                     "End": "1700"
                 }]
             }, {
@@ -210,8 +210,8 @@
                     var morningMilliseconds = startNoonBreak - startOfDay;
                     var millisecondsToNoonBreak = startNoonBreak - today;
                     clearContent("schaftleft");
-                    hoursLeft = millisecondsToNoonBreak / 1000 / 60 / 60;
-                    addContent("schaftleft", "nog " + hoursLeft.toPrecision(6) + " uur tot schaft");
+                    minutesLeft = millisecondsToNoonBreak / 1000 / 60;
+                    addContent("schaftleft", "nog " + minutesLeft.toPrecision(6) + " minuten tot schaft");
                     msPercentageMorning = (morningMilliseconds - millisecondsToNoonBreak) / morningMilliseconds * 100;
                     doPercentage("schaft", msPercentageMorning);
                 } else {
