@@ -128,6 +128,12 @@
             var s = today.getSeconds();
             var ms = today.getMilliseconds();
 
+            var startOfDay = new Date(yy, mm, dd, starthour, startminutes, 0);
+            var endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
+            var startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
+            var endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
+            var noonBreak = endNoonBreak - startNoonBreak;
+
             clearContent("pension");
             addContent("pension", " Ge zijt geboren op " + dateFormat(birthday) + ", wat wil zeggen");
             pensionDate = new Date(birthday.getFullYear() + 67, birthday.getMonth(), birthday.getDate());
@@ -198,12 +204,22 @@
                 msPercentageHour = (60 * 60 * 1000 - millisecondsToEndOfHour) / (60 * 60 * 1000) * 100;
                 doPercentage("hour", msPercentageHour);
 
+                //schaft
+                if (h * 60 + m <= morningendhour * 60 + morningendminutes) {
+                    showContent("totschaft");
+                    var morningMilliseconds = startNoonBreak - startOfDay;
+                    var millisecondsToNoonBreak = startNoonBreak - today;
+                    clearContent("schaftleft");
+                    hoursLeft = millisecondsToNoonBreak / 1000 / 60 / 60;
+                    addContent("schaftleft", "nog " + hoursLeft.toPrecision(6) + " uur tot schaft");
+                    msPercentageMorning = (morningMilliseconds - millisecondsToNoonBreak) / morningMilliseconds * 100;
+                    doPercentage("schaft", msPercentageMorning);
+                } else {
+                    hideContent("totschaft");
+                }
+
                 //day
-                var startOfDay = new Date(yy, mm, dd, starthour, startminutes, 0);
-                var endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
-                var startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
-                var endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
-                var noonBreak = endNoonBreak - startNoonBreak;
+
                 var milliSecondsToEndOfDay = endOfDay - today;
                 var millisecondsToday = endOfDay - startOfDay;
                 clearContent("dayleft");
@@ -285,6 +301,10 @@
 
         function hideContent(cnt) {
             document.getElementById(cnt).style.display = "none";
+        }
+
+        function showContent(cnt) {
+            document.getElementById(cnt).style.display = "table-row";
         }
 
         function clearContent(cnt) {
@@ -419,6 +439,23 @@
                     </svg>
                 </td>
                 <td id="hourleft"></td>
+            </tr>
+            <tr id="totschaft">
+                <td>Schaft</td>
+                <td>
+                    <table class="progress">
+                        <tr>
+                            <td class="value" id="schaft"></td>
+                            <td class="value left" id="schaft2"></td>
+                        </tr>
+                    </table>
+                </td>
+                <td><svg viewBox="0 0 32 32">
+                        <circle class="outer" id="schaftpie" r="16" cx="16" cy="16" />
+                        <circle class="inner" id="schaftpie2" r="8" cx="16" cy="16" />
+                    </svg>
+                </td>
+                <td id="schaftleft"></td>
             </tr>
             <tr>
                 <td>Dag</td>
