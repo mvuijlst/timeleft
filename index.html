@@ -199,15 +199,17 @@
                 doPercentage("hour", msPercentageHour);
 
                 //day
-                endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
-                startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
-                endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
-                noonBreak = endNoonBreak - startNoonBreak;
-                milliSecondsToEndOfDay = endOfDay - today;
+                var startOfDay = new Date(yy, mm, dd, starthour, startminutes, 0);
+                var endOfDay = new Date(yy, mm, dd, endhour, endminutes, 0);
+                var startNoonBreak = new Date(yy, mm, dd, morningendhour, morningendminutes, 0);
+                var endNoonBreak = new Date(yy, mm, dd, afternoonstarthour, afternoonstartminutes, 0);
+                var noonBreak = endNoonBreak - startNoonBreak;
+                var milliSecondsToEndOfDay = endOfDay - today;
+                var millisecondsToday = endOfDay - startOfDay;
                 clearContent("dayleft");
                 hoursLeft = milliSecondsToEndOfDay / 1000 / 60 / 60;
                 addContent("dayleft", "nog " + hoursLeft.toPrecision(6) + " uur tot naar huis");
-                msPercentageDay = (workminutes * 60 * 1000 - milliSecondsToEndOfDay) / (workminutes * 60 * 1000) * 100;
+                msPercentageDay = (millisecondsToday - milliSecondsToEndOfDay) / millisecondsToday * 100;
                 doPercentage("day", msPercentageDay);
 
                 //dayofweek
