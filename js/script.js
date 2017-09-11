@@ -68,22 +68,19 @@ function makeBar(id, label, start, end, now, startLabel, endLabel, format, ease)
             break;
         default:
     }
-    percentageleft = 100 - percentagedone;
     percentagedone = percentagedone.toPrecision(5) + '%';
-    percentageleft = percentageleft.toPrecision(5) + '%';
 
     donelabel = formatDoneLabel(format, end, start, now);
 
     if ($(thisID).length) {
         $(thisID).show();
         $(thisID + ' .percentagedone').css('width', percentagedone);
-        $(thisID + ' .percentageleft').css('width', percentageleft);
         $(thisID + ' .label .right').text(donelabel);
     } else {
         bar = '<div id="' + id + '"></div>';
         $('#content').append(bar);
         $(thisID).append('<div class="label"><div class="left">' + label + '</div><div class="right">' + donelabel + '</div>');
-        $(thisID).append('<div class="total"><div class="percentagedone"></div><div class="percentageleft"></div></div>');
+        $(thisID).append('<div class="total"><div class="percentagedone"></div></div></div>');
     }
 }
 
