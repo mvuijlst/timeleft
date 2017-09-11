@@ -20,7 +20,9 @@ function startTime() {
     makeBar('milliseconds', 'Seconde', 0, 1000, ms, '', '', 'ms', 'square');
     makeBar('seconds', 'Minuut', 0, 60000, s * 1000 + ms, '', '', 's.ms', 'none');
     makeBar('minutes', 'Uur', 0, 60 * 60000, m * 60 * 1000 + s * 1000 + ms, '', '', 'm:s', 'none');
-    makeBar('workday', 'Dag', (8 * 60 + 30) * 60 * 1000, 17 * 60 * 60 * 1000, h * 60 * 60 * 1000 + m * 60 * 1000 + s * 1000 + ms, '', '', 'm:s', 'none');
+    if (h * 60 + m <= 17 * 60) {
+        makeBar('workday', 'Dag', (8 * 60 + 30) * 60 * 1000, 17 * 60 * 60 * 1000, h * 60 * 60 * 1000 + m * 60 * 1000 + s * 1000 + ms, '', '', 'm:s', 'none');
+    }
 }
 
 
