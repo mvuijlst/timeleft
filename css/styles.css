@@ -1,0 +1,47 @@
+body {
+    font-family: 'Roboto';
+    background-color: #ddd;
+    font-size: 14px;
+}
+
+.total,
+.label {
+    margin: 10px;
+    apadding-bottom: 10px;
+    width: 500px;
+    clear: both;
+    font-family: 'Roboto Condensed';
+}
+
+.label {
+    padding: 15px 0 10px 0;
+}
+
+.total {
+    box-shadow: 1px 1px #000;
+}
+
+.label .right {
+    float: right;
+}
+
+.label .left {
+    float: left;
+}
+
+.percentagedone {
+    height: 4px;
+    background: #1e5799;
+    background: linear-gradient(to left, #1e5799 0%, #2989d8 50%, #70beff 84%, #70beff 84%, #d3ecff 100%);
+    /*border-top: 1px solid #99d;
+    border-bottom: 1px solid #44a;*/
+    float: left;
+}
+
+.percentageleft {
+    height: 4px;
+    background-color: #a7b7c9;
+    /*border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;*/
+    float: left;
+}
