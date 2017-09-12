@@ -9,7 +9,7 @@ function startTime() {
     var s = today.getSeconds();
     var ms = today.getMilliseconds();
 
-    var t = setTimeout(startTime, 9);
+    var t = setTimeout(startTime, 1);
 
     var startOfDay = new Date(yy, mm, dd, 8, 30, 0);
     var endOfDay = new Date(yy, mm, dd, 17, 0, 0);
@@ -17,11 +17,11 @@ function startTime() {
 
     $("#now").html(dd + "/" + mm + "/" + yy + " " + h + ":" + doPad(m, 2) + ":" + doPad(s, 2) + "." + doPad(ms, 3));
 
-    makeBar('milliseconds', 'Seconde', 0, 1000, ms, '', '', 'ms', 'square');
-    makeBar('seconds', 'Minuut', 0, 60000, s * 1000 + ms, '', '', 's.ms', 'none');
-    makeBar('minutes', 'Uur', 0, 60 * 60000, m * 60 * 1000 + s * 1000 + ms, '', '', 'm:s', 'none');
-    if (h * 60 + m >= 8 * 60 + 30 && h * 60 + m <= 17 * 60) {
-        makeBar('workday', 'Dag', (8 * 60 + 30) * 60 * 1000, 17 * 60 * 60 * 1000, h * 60 * 60 * 1000 + m * 60 * 1000 + s * 1000 + ms, '', '', 'm:s', 'none');
+    makeBar('milliseconds2', 'Seconde', 0, 1000, ms, '', '', 'ms', 'square');
+    makeBar('seconds', 'Minuut', 0, toMs(0, 1), toMs(0, 0, s, ms), '', '', 's.ms', 'none');
+    makeBar('minutes', 'Uur', 0, toMs(1, 0), toMs(0, m, s, ms), '', '', 'm:s', 'none');
+    if (toMs(h, m) >= toMs(7, 30) && toMs(h, m) <= toMs(17, 0)) {
+        makeBar('workday', 'Dag', toMs(8, 30), toMs(17, 30), toMs(h, m, s, ms), '', '', 'm:s', 'none');
     } else {
         hideBar('workday');
     }
@@ -94,8 +94,7 @@ function formatDoneLabel(format, end, start, now) {
         case 's.ms':
             s = parseInt(ms / 1000);
             ms -= s * 1000;
-            donelabel = 'nog ' + s + '.' + doPad(ms, 3) + ' ';
-            donelabel += checkPlural('seconde|seconden', s);
+            donelabel = 'nog ' + s + '.' + doPad(ms, 3) + ' seconden';
             break;
         case 'm:s':
             m = parseInt(ms / (60 * 1000));
@@ -114,6 +113,15 @@ function formatDoneLabel(format, end, start, now) {
 
 function doPad(i, ln) {
     return i.toString().length < ln ? "0".repeat(ln - i.toString().length) + i : i;
+}
+
+function toMs(h, m, s, ms) {
+    ret = 0;
+    if (ms) { ret += ms; }
+    if (s) { ret += s * 1000; }
+    ret += m * 60 * 1000;
+    ret += h * 60 * 60 * 1000;
+    return ret;
 }
 
 function checkPlural(options, nbr) {
