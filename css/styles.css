@@ -8,23 +8,30 @@ div {
     border-radius: 2px;
 }
 
+#now {
+    padding: 10px;
+    text-align: center;
+}
+
 .total,
 .label {
-    margin: 10px;
-    apadding-bottom: 10px;
-    width: 500px;
+    width: 100%;
     clear: both;
     font-family: 'Roboto Condensed';
 }
 
-.label {
-    padding: 15px 0 10px 0;
+.progress {
+    padding: 10px 10px 5px 10px;
 }
 
 .total {
     background-color: #a7b7c9;
     height: 4px;
     box-shadow: 0 1px 2px #fff, 0 -1px 1px #666, inset 0 -1px 1px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.48);
+}
+
+.label {
+    margin-bottom: 20px;
 }
 
 .label .right {
