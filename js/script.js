@@ -1,6 +1,22 @@
 function startTime() {
-    var now = new Date();
 
+    //start of day (hours, minutes)
+    var startOfDay = toMs(8, 30);
+
+    //end  of day (hours, minutes)
+    var endOfDay = toMs(17, 0);
+
+    //noon break (hours, minutes)
+    var noonBreak = toMs(12, 5);
+
+    //birth date (year, month, day)
+    var birthDate = new Date(1970, 8, 27);
+
+    //pension age (years)
+    var pensionAge = 67;
+
+
+    var now = new Date();
     var yy = now.getFullYear();
     var mm = now.getMonth() + 1;
     var dd = now.getDate();
@@ -12,14 +28,9 @@ function startTime() {
 
     var t = setTimeout(startTime, 1);
 
-    var startOfDay = toMs(8, 30);
-    var endOfDay = toMs(17, 0);
-    var noonBreak = toMs(12, 5);
-    var birthDate = new Date(1970, 8, 27);
-
     var startOfYear = new Date(yy, 1, 1, 0, 0, 0, 1) - 1;
     var endOfYear = new Date(yy + 1, 1, 1, 0, 0, 0, 0) - 1;
-    var pensionDate = new Date(birthDate.getFullYear() + 67, birthDate.getMonth(), birthDate.getDate());
+    var pensionDate = new Date(birthDate.getFullYear() + pensionAge, birthDate.getMonth(), birthDate.getDate());
 
     $("#now").html(dd + "/" + mm + "/" + yy + " " + h + ":" + doPad(m, 2) + ":" + doPad(s, 2) + "." + doPad(ms, 3));
 
