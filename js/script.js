@@ -51,7 +51,11 @@ function startTime() {
         } else {
             day = d;
         }
-        makeBar('workweek', 'Werkweek', 0, (endOfDay - startOfDay) * 5, (endOfDay - startOfDay) * day, '', '', 'percentageleft', 'none');
+        if (d > 5 || (d == 5 && toMs(h, m, s, ms) >= endOfDay)) {
+            hideBar('workweek');
+        } else {
+            makeBar('workweek', 'Werkweek', 0, (endOfDay - startOfDay) * 5, (endOfDay - startOfDay) * day, '', '', 'percentageleft', 'none');
+        }
         hideBar('workday');
     }
     makeBar('week', 'Week', toMs(0, 0), toMs(24, 0) * 7, toMs(24, 0) * (d - 1) + toMs(h, m, s, ms), '', '', 'percentageleft', 'none', 6);
