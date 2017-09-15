@@ -40,6 +40,8 @@ function startTime() {
     if (toMs(h, m, s, ms) >= startOfDay && toMs(h, m, s, ms) <= endOfDay) {
         if (toMs(h, m, s, ms) <= noonBreak) {
             makeBar('morning', 'Schaft', startOfDay, noonBreak, toMs(h, m, s, ms), '', '', 'h:m', 'none');
+        } else {
+            hideBar('morning');
         }
         makeBar('workday', 'Werkdag', startOfDay, endOfDay, toMs(h, m, s, ms), '', '', 'percentageleft', 'none');
         makeBar('workweek', 'Werkweek', 0, (endOfDay - startOfDay) * 5, (endOfDay - startOfDay) * (d - 1) + (toMs(h, m, s, ms) - startOfDay), '', '', 'percentageleft', 'none');
