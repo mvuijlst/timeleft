@@ -51,14 +51,14 @@ function startTime() {
         } else {
             day = d;
         }
-        if (d > 5 || (d == 5 && toMs(h, m, s, ms) >= endOfDay)) {
+        if (d == 0 || d > 5 || (d == 5 && toMs(h, m, s, ms) >= endOfDay)) {
             hideBar('workweek');
         } else {
             makeBar('workweek', 'Werkweek', 0, (endOfDay - startOfDay) * 5, (endOfDay - startOfDay) * day, '', '', 'percentageleft', 'none');
         }
         hideBar('workday');
     }
-    makeBar('week', 'Week', toMs(0, 0), toMs(24, 0) * 7, toMs(24, 0) * (d - 1) + toMs(h, m, s, ms), '', '', 'percentageleft', 'none', 6);
+    makeBar('week', 'Week', toMs(0, 0), toMs(24, 0) * 7, toMs(24, 0) * d + toMs(h, m, s, ms), '', '', 'percentageleft', 'none', 6);
     makeBar('month', 'Maand', toMs(0, 0), toMs(24, 0) * daysInMonth(now), toMs(24, 0) * (dd - 1) + toMs(h, m, s, ms), '', '', 'percentageleft', 'none', 7);
     makeBar('year', 'Jaar', startOfYear, endOfYear, now, '', '', 'percentageleft', 'none', 8);
     makeBar('pension', 'Pensioen', birthDate, pensionDate - birthDate, now - birthDate, '', '', 'percentage', 'none', 10);
